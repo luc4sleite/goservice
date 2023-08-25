@@ -1,7 +1,7 @@
 package com.soulcode.goserviceapp.domain.enums;
 
 public enum Perfil {
-    ADMIN("Administratdor"),
+    ADMIN("Administrador"),
     PRESTADOR("Prestador"),
     CLIENTE("Cliente");
 
