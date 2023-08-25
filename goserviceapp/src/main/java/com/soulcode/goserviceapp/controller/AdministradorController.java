@@ -7,6 +7,7 @@ import com.soulcode.goserviceapp.service.UsuarioService;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,15 @@ public class AdministradorController {
     private ServicoService servicoService;
 
     @GetMapping(value = "/servicos")
-    public String servicos() {
-        return "servicosAdmin";
+    public ModelAndView servicos() {
+        ModelAndView mv = new ModelAndView("servicosAdmin");
+        try{
+            List<Servico> servicos = servicoService.findAll();
+            mv.addObject("servicos", servicos);
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
+        }
+        return mv;
     }
 
     @PostMapping(value = "/servicos")
