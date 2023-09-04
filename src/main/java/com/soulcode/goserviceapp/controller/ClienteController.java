@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -91,15 +92,22 @@ public class ClienteController {
             @RequestParam(name = "hora") LocalTime hora,
             Authentication authentication,
             RedirectAttributes attributes) {
-        try {
-            agendamentoService.create(authentication, servicoId, prestadorId, data, hora);
-            attributes.addFlashAttribute("successMessage", "Agendamento realizado com sucesso. Aguardando confirmação.");
-        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException ex) {
-            attributes.addFlashAttribute("errorMessage", ex.getMessage());
-        } catch (Exception ex) {
-            attributes.addFlashAttribute("errorMessage", "Erro ao finalizar agendamento.");
+        LocalDateTime dataHoraAgendamento = LocalDateTime.of(data, hora);
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+        if (dataHoraAgendamento.isAfter(dataHoraAtual)) {
+            try {
+                agendamentoService.create(authentication, servicoId, prestadorId, data, hora);
+                attributes.addFlashAttribute("successMessage", "Agendamento realizado com sucesso. Aguardando confirmação.");
+            } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException |
+                     DataAgendamentoInvalidaException ex) {
+                attributes.addFlashAttribute("errorMessage", ex.getMessage());
+            } catch (Exception ex) {
+                attributes.addFlashAttribute("errorMessage", "Erro ao finalizar agendamento.");
+            }
+            return "redirect:/cliente/historico";
         }
-        return "redirect:/cliente/historico";
+        attributes.addFlashAttribute("errorMessage", "Você não pode agendar um serviço em uma data anterior a hoje.");
+        return "redirect:/cliente/agendar";
     }
 
     @GetMapping(value = "/historico")
