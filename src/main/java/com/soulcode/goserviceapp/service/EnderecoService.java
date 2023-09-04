@@ -19,4 +19,22 @@ public class EnderecoService {
         }
         throw new EnderecoNaoEncontradoException();
     }
+
+    public Endereco findByEmail(String email) {
+        Optional<Endereco> result = enderecoRepository.findByEmail(email);
+        if (result.isPresent()) {
+            return result.get();
+        }
+        throw new EnderecoNaoEncontradoException();
+    }
+
+    public Endereco update(Endereco endereco) {
+        Endereco updatedEndereco = this.findById(endereco.getId());
+        updatedEndereco.setCidade(endereco.getCidade());
+        updatedEndereco.setLogradouro(endereco.getLogradouro());
+        updatedEndereco.setNumero(endereco.getNumero());
+        updatedEndereco.setUf(endereco.getUf());
+        return enderecoRepository.save(updatedEndereco);
+    }
+
 }
