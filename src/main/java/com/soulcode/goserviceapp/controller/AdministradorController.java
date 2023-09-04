@@ -1,17 +1,14 @@
 package com.soulcode.goserviceapp.controller;
 
-import com.soulcode.goserviceapp.domain.AgendamentoLog;
-import com.soulcode.goserviceapp.domain.Servico;
-import com.soulcode.goserviceapp.domain.Usuario;
-import com.soulcode.goserviceapp.domain.UsuarioLog;
-import com.soulcode.goserviceapp.service.AgendamentoLogService;
-import com.soulcode.goserviceapp.service.ServicoService;
-import com.soulcode.goserviceapp.service.UsuarioLogService;
-import com.soulcode.goserviceapp.service.UsuarioService;
+import com.soulcode.goserviceapp.domain.*;
+import com.soulcode.goserviceapp.repository.AgendamentoRepository;
+import com.soulcode.goserviceapp.service.*;
 import com.soulcode.goserviceapp.service.exceptions.ServicoNaoEncontradoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,13 +23,26 @@ public class AdministradorController {
     private UsuarioService usuarioService;
 
     @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private AgendamentoService agendamentoService;
+
+    @Autowired
+    private AgendamentoLogService agendamentoLogService;
+
+    @Autowired
+    private PrestadorService prestadorService;
+
+    @Autowired
     private ServicoService servicoService;
 
     @Autowired
     private UsuarioLogService usuarioLogService;
 
     @Autowired
-    private AgendamentoLogService agendamentoLogService;
+    private AgendamentoRepository agendamentoRepository;
+
 
     @GetMapping(value = "/servicos")
     public ModelAndView servicos() {
@@ -40,11 +50,17 @@ public class AdministradorController {
         try {
             List<Servico> servicos = servicoService.findAll();
             mv.addObject("servicos", servicos);
-        } catch (Exception ex) {
+            List<Agendamento> agendamentos = agendamentoService.findAll();
+            mv.addObject("agendamentos", agendamentos);
+        }
+        catch (Exception ex) {
             mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
         }
         return mv;
     }
+
+
+
 
     @PostMapping(value = "/servicos")
     public String createService(Servico servico, RedirectAttributes attributes) {
