@@ -16,3 +16,10 @@
     }, false)
   })
 })()
+
+// bloqueando a seleção de uma data anterior ao dia de hoje no formulario de agendar servico.
+document.addEventListener("DOMContentLoaded", function (){
+    var dataInput = document.getElementById("data");
+    var hoje = new Date().toISOString().split("T")[0];
+    dataInput.setAttribute("min", hoje);
+});
