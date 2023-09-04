@@ -40,6 +40,8 @@ public class AgendamentoService {
         throw new AgendamentoNaoEncontradoException();
     }
 
+
+
     public Agendamento create(Authentication authentication, Long servicoId, Long prestadorId, LocalDate data, LocalTime hora){
         Cliente cliente = clienteService.findAuthenticated(authentication);
         Prestador prestador = prestadorService.findById(prestadorId);
@@ -54,6 +56,10 @@ public class AgendamentoService {
         agendamentoLogService.create(agendamentoLog);
 
         return agendamentoRepository.save(agendamento);
+    }
+
+    public List<Agendamento> findAll(){
+        return agendamentoRepository.findAll();
     }
     @Cacheable(cacheNames = "redisCache")
     public List<Agendamento> findByCliente(Authentication authentication){

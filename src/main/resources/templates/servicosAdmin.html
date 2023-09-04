@@ -50,6 +50,88 @@
                 </form>
             </div>
         </div>
+        <div>
+            <div>
+                <script th:inline="javascript">
+                    let aguardandoConfir = 0;
+                    let confirmado = 0;
+                    let concluido = 0;
+                    let canceladoCliente = 0;
+                    let canceladoPrestador = 0;
+                    let numTotal;
+                    let percentualAC;
+                    let percentualConfirmado;
+                    let percentualConcluido;
+                    let percentualCC;
+                    let percentualCP;
+                </script>
+
+                <table>
+                    <tr th:each="agendamento : ${agendamentos}">
+                        <script th:inline="javascript">
+
+
+                            if ("Aguardando Confirmação" === [[${agendamento.statusAgendamento.descricao}]]) {
+                                aguardandoConfir++;
+                            } else if ("Confirmado" === [[${agendamento.statusAgendamento.descricao}]]) {
+                                confirmado++;
+                            } else if ("Concluido" === [[${agendamento.statusAgendamento.descricao}]]) {
+                                concluido++;
+                            } else if ("Cancelado pelo Cliente" === [[${agendamento.statusAgendamento.descricao}]]) {
+                                canceladoCliente++;
+                            } else {
+                                canceladoPrestador++;
+                            }
+                        </script>
+                    </tr>
+                </table>
+                    <script th:inline="javascript">
+
+                numTotal = aguardandoConfir + confirmado + concluido + canceladoCliente + canceladoPrestador;
+                percentualAC = (aguardandoConfir / numTotal) * 100;
+                percentualConfirmado = (confirmado / numTotal) * 100;
+                percentualConcluido = (concluido / numTotal) * 100;
+                percentualCC = (canceladoCliente / numTotal) * 100;
+                percentualCP = (canceladoPrestador / numTotal) * 100;
+            </script>
+            </div>
+            <div class="grafico">
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script th:inline="javascript">
+                  const ctx = document.getElementById('myChart');
+
+                  new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                      labels: ['Aguardando Confirmação', 'Confirmado', 'Concluído', 'Cancelado pelo Cliente', 'Cancelado pelo Prestador'],
+                      datasets: [{
+                        label: 'Percentual de Serviços por Status de Agendamento',
+                        data: [percentualAC.toFixed(2), percentualConfirmado.toFixed(2), percentualConcluido.toFixed(2),
+                         percentualCC.toFixed(2), percentualCP.toFixed(2)],
+                        backgroundColor: [
+                        'rgba(255, 0, 0, 1)',
+                        'rgba(0, 0, 255, 1) ',
+                        'rgba(0, 128, 0, 1)',
+                        'rgba(255, 255, 0, 1)',
+                        'rgba(128, 0, 128, 1)'
+                        ],
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                  });
+                </script>
+
 
         <div class="card w-100 mt-5">
             <div class="card-body">
@@ -85,6 +167,7 @@
                 </table>
             </div>
         </div>
+            </div>
     </main>
 
     <div th:each="servico : ${servicos}">
