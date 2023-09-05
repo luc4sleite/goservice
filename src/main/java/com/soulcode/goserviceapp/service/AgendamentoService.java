@@ -4,6 +4,7 @@ import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
 import com.soulcode.goserviceapp.repository.AgendamentoRepository;
 import com.soulcode.goserviceapp.service.exceptions.AgendamentoNaoEncontradoException;
+import com.soulcode.goserviceapp.service.exceptions.HorarioAgendamentoNaoDisponivelException;
 import com.soulcode.goserviceapp.service.exceptions.StatusAgendamentoImutavelException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -125,5 +126,13 @@ public class AgendamentoService {
             return;
         }
         throw new StatusAgendamentoImutavelException();
+    }
+
+    public boolean verificarDisponibilidade(Long prestadorId, LocalDate data, LocalTime hora) {
+        List<Agendamento> agendamentos = agendamentoRepository.findByPrestadorIdAndDataHora(prestadorId, data, hora);
+        if(agendamentos.isEmpty()) {
+            return agendamentos.isEmpty();
+        }
+        throw new HorarioAgendamentoNaoDisponivelException();
     }
 }
