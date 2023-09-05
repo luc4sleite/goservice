@@ -1,25 +1,20 @@
 package com.soulcode.goserviceapp.repository;
 
 import com.soulcode.goserviceapp.domain.Endereco;
-import com.soulcode.goserviceapp.domain.Usuario;
-import jakarta.validation.constraints.Email;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
+@Repository
+public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
-    Optional<Endereco> findByEmail(String email);
-
-
-    @Modifying
     @Query(value =
-            "UPDATE enderecos e " +
-                    "SET e.cidade = ?, e.logradouro = ?, e.numero = ?, e.uf = ? " +
-                    "WHERE usuarios.email = ?", nativeQuery = true)
-    void updateenderecoByEmail(String cidade, String logradouro, String numero, String uf, String email);
-
-
+            "SELECT s.*" +
+                    " FROM enderecos e" +
+                    " JOIN usuarios u ON e.usuario_id = u.id" +
+                    " WHERE u.email = ?", nativeQuery = true)
+            List<Endereco> findByEnderecoEmail(String email);
 }
