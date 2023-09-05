@@ -94,12 +94,13 @@ public class ClienteController {
             RedirectAttributes attributes) {
         LocalDateTime dataHoraAgendamento = LocalDateTime.of(data, hora);
         LocalDateTime dataHoraAtual = LocalDateTime.now();
-        if (dataHoraAgendamento.isAfter(dataHoraAtual)) {
+
+        if (dataHoraAgendamento.isAfter(dataHoraAtual) && agendamentoService.verificarDisponibilidade(prestadorId, data, hora)) {
             try {
                 agendamentoService.create(authentication, servicoId, prestadorId, data, hora);
                 attributes.addFlashAttribute("successMessage", "Agendamento realizado com sucesso. Aguardando confirmação.");
             } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException |
-                     DataAgendamentoInvalidaException ex) {
+                     DataAgendamentoInvalidaException | HorarioAgendamentoNaoDisponivelException ex) {
                 attributes.addFlashAttribute("errorMessage", ex.getMessage());
             } catch (Exception ex) {
                 attributes.addFlashAttribute("errorMessage", "Erro ao finalizar agendamento.");
