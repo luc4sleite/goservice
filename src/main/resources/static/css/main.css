@@ -1,43 +1,7 @@
-
-.first-p {
-    margin-top: 50px;
-}
-
-.content-perguntas {
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.space {
-    text-align: center;
-}
-
-.sub {
-    text-decoration: underline;
-    margin-top: 50px;
-}
-
-.mg {
-    margin-bottom: 10px;
-}
-
 .logo {
     width: 95px;
 }
 
 .grafico {
     margin-top: 50px;
-}
-
-.cardsHome{
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 20px;
-    gap: 40px;
 }

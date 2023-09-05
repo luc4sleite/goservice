@@ -72,7 +72,7 @@ public class AgendamentoService {
     public List<Agendamento> findByPrestador(Authentication authentication){
         System.err.println("BUSCANDO AGENDAMENTOS PRESTADOR NO BANCO...");
         Prestador prestador = prestadorService.findAuthenticated(authentication);
-        return  agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
+        return agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
     }
 
     public void cancelAgendaPrestador(Authentication authentication, Long id){
