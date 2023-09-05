@@ -3,6 +3,8 @@ package com.soulcode.goserviceapp.domain;
 import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
@@ -13,6 +15,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "agendamentos")
+@Getter @Setter
 public class Agendamento implements Serializable{
 
     @Id
@@ -56,70 +59,6 @@ public class Agendamento implements Serializable{
         this.statusAgendamento = statusAgendamento;
         this.data = data;
         this.hora = hora;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Prestador getPrestador() {
-        return prestador;
-    }
-
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
-    }
-
-    public Servico getServico() {
-        return servico;
-    }
-
-    public void setServico(Servico servico) {
-        this.servico = servico;
-    }
-
-    public StatusAgendamento getStatusAgendamento() {
-        return statusAgendamento;
-    }
-
-    public void setStatusAgendamento(StatusAgendamento statusAgendamento) {
-        this.statusAgendamento = statusAgendamento;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
-    public LocalTime getHora() {
-        return hora;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
-    }
-
-    public LocalDateTime getDataHoraRegistro() {
-        return dataHoraRegistro;
-    }
-
-    public void setDataHoraRegistro(LocalDateTime dataHoraRegistro) {
-        this.dataHoraRegistro = dataHoraRegistro;
     }
 
     public boolean isCancelable(){

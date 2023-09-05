@@ -6,12 +6,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Getter @Setter
 public class Prestador extends Usuario{
     private String descricao;
 
@@ -39,22 +42,6 @@ public class Prestador extends Usuario{
         this.descricao = descricao;
         this.taxaPorHora = taxaPorHora;
         this.especialidades = especialidades;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Float getTaxaPorHora() {
-        return taxaPorHora;
-    }
-
-    public void setTaxaPorHora(Float taxaPorHora) {
-        this.taxaPorHora = taxaPorHora;
     }
 
     public List<Servico> getEspecialidades() {

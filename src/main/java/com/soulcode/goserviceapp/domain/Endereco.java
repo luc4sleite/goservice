@@ -1,10 +1,14 @@
 package com.soulcode.goserviceapp.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 @Table(name = "enderecos")
 public class Endereco {
 
@@ -28,63 +32,12 @@ public class Endereco {
     @JoinColumn(nullable = false)
     private Usuario usuario;
 
-    public Endereco() {
-    }
-
     public Endereco(Long id, String uf, String cidade, String logradouro, String numero, Usuario usuario) {
         this.id = id;
         this.uf = uf;
         this.cidade = cidade;
         this.logradouro = logradouro;
         this.numero = numero;
-        this.usuario = usuario;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
