@@ -4,6 +4,7 @@ import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.repository.AgendamentoRepository;
 import com.soulcode.goserviceapp.service.*;
 import com.soulcode.goserviceapp.service.exceptions.ServicoNaoEncontradoException;
+import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,9 @@ public class AdministradorController {
 
     @Autowired
     private AgendamentoRepository agendamentoRepository;
+
+    @Autowired
+    private AdministradorService administradorService;
 
 
     @GetMapping(value = "/servicos")
@@ -170,5 +174,32 @@ public class AdministradorController {
             mv.addObject("errorMessage", "Erro ao buscar dados de log de autenticação.");
         }
         return mv;
+    }
+
+    @GetMapping(value = "/dados")
+    public ModelAndView dados(Authentication authentication) {
+        ModelAndView mv = new ModelAndView("dadosAdmin");
+        try {
+            Administrador administrador = administradorService.findAuthenticated(authentication);
+            mv.addObject("administrador", administrador);
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
+            mv.addObject("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados do cliente.");
+        }
+        return mv;
+    }
+
+    @PostMapping(value = "/dados")
+    public String alterarDados(Administrador administrador, RedirectAttributes attributes) {
+        try {
+            administradorService.update(administrador);
+            attributes.addFlashAttribute("successMessage", "Dados alterados.");
+        } catch (UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados cadastrais.");
+        }
+        return "redirect:/admin/dados";
     }
 }
