@@ -51,13 +51,15 @@ public class AdministradorController {
 
 
     @GetMapping(value = "/servicos")
-    public ModelAndView servicos() {
+    public ModelAndView servicos(@RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber)
+    {
         ModelAndView mv = new ModelAndView("servicosAdmin");
         try {
-            List<Servico> servicos = servicoService.findAll();
+            int offset = (pageNumber - 1) * 10;
+            List<Servico> servicos = servicoService.findLimited(offset);
+            Long totalPages = servicoService.paginasRegistros();
             mv.addObject("servicos", servicos);
-            List<Agendamento> agendamentos = agendamentoService.findAll();
-            mv.addObject("agendamentos", agendamentos);
+            mv.addObject("totalPages", totalPages);
         }
         catch (Exception ex) {
             mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
@@ -65,8 +67,20 @@ public class AdministradorController {
         return mv;
     }
 
-
-
+    @PostMapping(value = "/servicos/pag")
+    public ModelAndView paginacaoServicos(@RequestParam(name = "pageNumber") int pageNumber){
+        ModelAndView mv = new ModelAndView("servicosAdmin");
+        try {
+            int offset = (pageNumber - 1) * 10;
+            List<Servico> servicos = servicoService.findLimited(offset);
+            Long totalPages = servicoService.paginasRegistros();
+            mv.addObject("servicos", servicos);
+            mv.addObject("totalPages", totalPages);
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
+        }
+        return mv;
+    }
 
     @PostMapping(value = "/servicos")
     public String createService(Servico servico, RedirectAttributes attributes) {
