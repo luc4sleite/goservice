@@ -52,11 +52,6 @@ public class UsuarioService {
         }
         throw new UsuarioNaoEncontradoException();
     }
-    //@Cacheable(cacheNames = "redisCache2")
-    public List<Usuario> findAll()
-    {
-        return usuarioRepository.findAll();
-    }
 
     public Usuario findById(Long id) {
         Optional<Usuario> result = usuarioRepository.findById(id);
@@ -137,6 +132,5 @@ public class UsuarioService {
                 throw new UsuarioNaoEncontradoException();
             }
         } throw new UsuarioNaoAutenticadoException();
-
     }
 }

@@ -177,6 +177,16 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" th:classappend="${pageNumber == currentPage} ? 'active' : ''">
+                            <form method="post" th:action="@{/admin/servicos/pag}">
+                                <input type="hidden" name="pageNumber" th:value="${pageNumber}">
+                                <button type="submit" class="page-link" th:text="${pageNumber}"></button>
+                            </form>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
             </div>

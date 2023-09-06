@@ -15,6 +15,19 @@ public class ServicoService {
     @Autowired
     private ServicoRepository servicoRepository;
 
+    public Long paginasRegistros(){
+        Long totalRecords = servicoRepository.count();
+        Long totalPages = totalRecords / 10;
+        if (totalRecords % 10 != 0){
+            totalPages++;
+        }
+        return totalPages;
+    }
+
+    public List<Servico> findLimited(int offset){
+        return servicoRepository.findLimited(offset);
+    }
+
     @Cacheable(cacheNames = "redisCache")
     public List<Servico> findAll(){
         System.err.println("BUSCANDO NO BANCO DE DADOS...");
