@@ -26,17 +26,17 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Cacheable(cacheNames = "redisCache")
-    public List<Usuario> findAll(){
-        System.err.println("BUSCANDO USUARIOS NO BANCO DE DADOS...");
-        return usuarioRepository.findAll();
-    }
     public Usuario findByEmail(String email) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
         if (usuario.isPresent()) {
             return usuario.get();
         }
         throw new UsuarioNaoEncontradoException();
+    }
+    //@Cacheable(cacheNames = "redisCache2")
+    public List<Usuario> findAll()
+    {
+        return usuarioRepository.findAll();
     }
 
 
