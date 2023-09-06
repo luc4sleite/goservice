@@ -46,7 +46,7 @@
                         <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" th:value="${cliente.dataNascimento}">
                         <div class="form-text"></div>
                     </div>
-
+                    <a th:href = "@{/endereco/new}" class="btn btn-primary">Alterar endereço</a>
                     <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
                 </form>
             </div>
