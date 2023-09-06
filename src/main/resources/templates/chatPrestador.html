@@ -1,0 +1,48 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{::title}, ~{::#content})">
+<head>
+    <title>Chat Cliente | GoService</title>
+</head>
+<body>
+
+<div id="content">
+    <div th:replace="fragments/header :: header"></div>
+
+    <main class="container mt-4">
+        <div class="card">
+            <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>Chat</h5>
+                <a th:href="@{/prestador/agenda}" class="btn btn-primary ">Voltar <i class="bi bi-arrow-bar-left"></i></a>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <div th:if="${mensagens != null}" th:each="mensagem : ${mensagens}" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0 opacity-75" th:text="${mensagem.remetente.nome}"></h6>
+                                <p class="mb-0" th:text="${mensagem.conteudo}"></p>
+                            </div>
+                            <small class="opacity-50 text-nowrap" th:text="${mensagem.dataHora}"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <form method="post" th:action="@{/prestador/agenda/chat/enviar}" class="input-group">
+                    <input type="hidden" name="agendamentoId" th:value="${id}" required>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Deixe sua mensagem" id="conteudo" name="conteudo" required></textarea>
+                        <label for="conteudo">Mensagem</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>

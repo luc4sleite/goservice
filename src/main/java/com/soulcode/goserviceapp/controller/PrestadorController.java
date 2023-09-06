@@ -1,9 +1,11 @@
 package com.soulcode.goserviceapp.controller;
 
 import com.soulcode.goserviceapp.domain.Agendamento;
+import com.soulcode.goserviceapp.domain.Mensagem;
 import com.soulcode.goserviceapp.domain.Prestador;
 import com.soulcode.goserviceapp.domain.Servico;
 import com.soulcode.goserviceapp.service.AgendamentoService;
+import com.soulcode.goserviceapp.service.MensagemService;
 import com.soulcode.goserviceapp.service.PrestadorService;
 import com.soulcode.goserviceapp.service.ServicoService;
 import com.soulcode.goserviceapp.service.exceptions.*;
@@ -11,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +34,9 @@ public class PrestadorController {
 
     @Autowired
     private AgendamentoService agendamentoService;
+
+    @Autowired
+    private MensagemService mensagemService;
 
     @GetMapping(value = "/dados")
     public ModelAndView dados(Authentication authentication) {
@@ -146,7 +149,6 @@ public class PrestadorController {
         return "redirect:/prestador/agenda";
     }
 
-
     @PostMapping(value = "/agenda/busca")
     public ModelAndView buscarAgendamento(
             @RequestParam(name= "dataInicial")LocalDate dataInicial,
@@ -162,5 +164,40 @@ public class PrestadorController {
         mv.addObject("errorMessage", "Erro ao carregar dados de agendamento");
         }
         return mv;
+    }
+  
+    @GetMapping(value = "/agenda/chat/{id}")
+    public ModelAndView buscarMensagens(@PathVariable Long id)
+    {
+        ModelAndView mv = new ModelAndView("chatPrestador");
+        try {
+            List<Mensagem> mensagens = mensagemService.findByAgendamentoId(id);
+            mv.addObject("mensagens", mensagens);
+            mv.addObject("agendamentoId", id);
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
+            mv.addObject("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao carregar mensagens.");
+        }
+        return mv;
+    }
+
+    @PostMapping(value = "/agenda/chat/enviar")
+    public String enviarMensagem(
+            @RequestParam(name = "agendamentoId") Long agendamentoId,
+            @RequestParam(name = "conteudo") String conteudo,
+            Authentication authentication,
+            RedirectAttributes attributes) {
+        try {
+            LocalDateTime dataHora = LocalDateTime.now();
+            mensagemService.createMensagemByPrestador(authentication, agendamentoId, dataHora, conteudo);
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException |
+                 AgendamentoNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        }
+
+        return "redirect:/prestador/agenda/chat/" + agendamentoId;
     }
 }
