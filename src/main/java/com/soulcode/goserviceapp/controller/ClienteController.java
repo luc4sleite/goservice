@@ -188,4 +188,20 @@ public class ClienteController {
 
         return "redirect:/cliente/historico/chat/" + agendamentoId;
     }
+    @PostMapping(value = "/historico/busca")
+    public ModelAndView buscarAgendamento(
+            @RequestParam(name= "dataInicial")LocalDate dataInicial,
+            @RequestParam(name= "dataFinal")LocalDate dataFinal,
+            Authentication authentication
+    ){
+        ModelAndView mv = new ModelAndView("historicoCliente");
+        try {
+            List<Agendamento> agendamentos = agendamentoService.findAgendamentosByDate(authentication, dataInicial, dataFinal);
+            mv.addObject("agendamentos", agendamentos);
+        }
+        catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao carregar dados de agendamento");
+        }
+        return mv;
+    }
 }
