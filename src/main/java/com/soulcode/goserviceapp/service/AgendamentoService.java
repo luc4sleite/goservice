@@ -147,4 +147,14 @@ public class AgendamentoService {
         }
         throw new AgendamentoNaoEncontradoException();
     }
+    public List<Agendamento> findAgendamentosByDate(Authentication authentication, LocalDate dataInicial, LocalDate dataFinal) {
+        Cliente cliente = clienteService.findAuthenticated(authentication);
+        Long id = cliente.getId();
+        List<Agendamento> agendamentos = agendamentoRepository.findByDatehistorico(dataInicial, dataFinal, id);
+        if (!agendamentos.isEmpty()) {
+            return agendamentos;
+
+        }
+        throw new AgendamentoNaoEncontradoException();
+    }
 }
