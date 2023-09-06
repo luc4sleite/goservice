@@ -22,7 +22,7 @@ public class AgendamentoService {
     private AgendamentoRepository agendamentoRepository;
 
     @Autowired
-    private  ServicoService servicoService;
+    private ServicoService servicoService;
 
     @Autowired
     private ClienteService clienteService;
@@ -33,17 +33,16 @@ public class AgendamentoService {
     @Autowired
     private AgendamentoLogService agendamentoLogService;
 
-    public Agendamento findById(Long id){
+    public Agendamento findById(Long id) {
         Optional<Agendamento> agendamento = agendamentoRepository.findById(id);
-        if(agendamento.isPresent()) {
+        if (agendamento.isPresent()) {
             return agendamento.get();
         }
         throw new AgendamentoNaoEncontradoException();
     }
 
 
-
-    public Agendamento create(Authentication authentication, Long servicoId, Long prestadorId, LocalDate data, LocalTime hora){
+    public Agendamento create(Authentication authentication, Long servicoId, Long prestadorId, LocalDate data, LocalTime hora) {
         Cliente cliente = clienteService.findAuthenticated(authentication);
         Prestador prestador = prestadorService.findById(prestadorId);
         Servico servico = servicoService.findById(servicoId);
@@ -59,27 +58,28 @@ public class AgendamentoService {
         return agendamentoRepository.save(agendamento);
     }
 
-    public List<Agendamento> findAll(){
+    public List<Agendamento> findAll() {
         return agendamentoRepository.findAll();
     }
+
     @Cacheable(cacheNames = "redisCache")
-    public List<Agendamento> findByCliente(Authentication authentication){
+    public List<Agendamento> findByCliente(Authentication authentication) {
         System.err.println("BUSCANDO AGENDAMENTOS CLIENTE NO BANCO...");
         Cliente cliente = clienteService.findAuthenticated(authentication);
         return agendamentoRepository.findByClienteEmail(cliente.getEmail());
     }
 
     @Cacheable(cacheNames = "redisCache")
-    public List<Agendamento> findByPrestador(Authentication authentication){
+    public List<Agendamento> findByPrestador(Authentication authentication) {
         System.err.println("BUSCANDO AGENDAMENTOS PRESTADOR NO BANCO...");
         Prestador prestador = prestadorService.findAuthenticated(authentication);
         return agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
     }
 
-    public void cancelAgendaPrestador(Authentication authentication, Long id){
+    public void cancelAgendaPrestador(Authentication authentication, Long id) {
         Prestador prestador = prestadorService.findAuthenticated(authentication);
         Agendamento agendamento = findById(id);
-        if(agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)){
+        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)) {
             agendamento.setStatusAgendamento(StatusAgendamento.CANCELADO_PELO_PRESTADOR);
             agendamentoRepository.save(agendamento);
             AgendamentoLog agendamentoLog = new AgendamentoLog(agendamento);
@@ -89,10 +89,10 @@ public class AgendamentoService {
         throw new StatusAgendamentoImutavelException();
     }
 
-    public void confirmAgenda(Authentication authentication, Long id){
+    public void confirmAgenda(Authentication authentication, Long id) {
         Prestador prestador = prestadorService.findAuthenticated(authentication);
         Agendamento agendamento = findById(id);
-        if(agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)){
+        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)) {
             agendamento.setStatusAgendamento(StatusAgendamento.CONFIRMADO);
             agendamentoRepository.save(agendamento);
             AgendamentoLog agendamentoLog = new AgendamentoLog(agendamento);
@@ -102,10 +102,10 @@ public class AgendamentoService {
         throw new StatusAgendamentoImutavelException();
     }
 
-    public void cancelAgendaCliente(Authentication authentication, Long id){
+    public void cancelAgendaCliente(Authentication authentication, Long id) {
         Cliente cliente = clienteService.findAuthenticated(authentication);
         Agendamento agendamento = findById(id);
-        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)){
+        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)) {
             agendamento.setStatusAgendamento(StatusAgendamento.CANCELADO_PELO_CLIENTE);
             agendamentoRepository.save(agendamento);
             AgendamentoLog agendamentoLog = new AgendamentoLog(agendamento);
@@ -115,10 +115,10 @@ public class AgendamentoService {
         throw new StatusAgendamentoImutavelException();
     }
 
-    public void completeAgenda(Authentication authentication, Long id){
+    public void completeAgenda(Authentication authentication, Long id) {
         Cliente cliente = clienteService.findAuthenticated(authentication);
         Agendamento agendamento = findById(id);
-        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.CONFIRMADO)){
+        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.CONFIRMADO)) {
             agendamento.setStatusAgendamento(StatusAgendamento.CONCLUIDO);
             agendamentoRepository.save(agendamento);
             AgendamentoLog agendamentoLog = new AgendamentoLog(agendamento);
@@ -130,9 +130,21 @@ public class AgendamentoService {
 
     public boolean verificarDisponibilidade(Long prestadorId, LocalDate data, LocalTime hora) {
         List<Agendamento> agendamentos = agendamentoRepository.findByPrestadorIdAndDataHora(prestadorId, data, hora);
-        if(agendamentos.isEmpty()) {
+        if (agendamentos.isEmpty()) {
             return agendamentos.isEmpty();
         }
         throw new HorarioAgendamentoNaoDisponivelException();
+
+    }
+
+    public List<Agendamento> findAgendamentosByDateRange(Authentication authentication, LocalDate dataInicial, LocalDate dataFinal) {
+        Prestador prestador = prestadorService.findAuthenticated(authentication);
+        Long id = prestador.getId();
+        List<Agendamento> agendamentos = agendamentoRepository.findByDateAgendamento(dataInicial, dataFinal, id);
+        if (!agendamentos.isEmpty()) {
+        return agendamentos;
+
+        }
+        throw new AgendamentoNaoEncontradoException();
     }
 }
