@@ -46,8 +46,12 @@
                         <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" th:value="${cliente.dataNascimento}">
                         <div class="form-text"></div>
                     </div>
-                    <a th:href = "@{/endereco/new}" class="btn btn-primary">Alterar endereço</a>
-                    <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
+                    <a th:href = "@{/endereco/new}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right"
+                       data-bs-custom-class="custom-tooltip"
+                       data-bs-title="Va para a página alterar endereço">Alterar endereço</a>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Ao clicar você confirma a alteração dos dados acima.">Salvar <i class="bi bi-save2 ms-2"></i></button>
                 </form>
             </div>
         </div>
