@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/prestador")
@@ -142,5 +144,23 @@ public class PrestadorController {
             attributes.addFlashAttribute("errorMessage", "Erro ao confirmar agendamento.");
         }
         return "redirect:/prestador/agenda";
+    }
+
+
+    @PostMapping(value = "/agenda/busca")
+    public ModelAndView buscarAgendamento(
+            @RequestParam(name= "dataInicial")LocalDate dataInicial,
+            @RequestParam(name= "dataFinal")LocalDate dataFinal,
+            Authentication authentication
+            ){
+        ModelAndView mv = new ModelAndView("agendaPrestador");
+        try {
+            List<Agendamento> agendamentos = agendamentoService.findAgendamentosByDateRange(authentication, dataInicial, dataFinal);
+            mv.addObject("agendamentos", agendamentos);
+        }
+        catch (Exception ex) {
+        mv.addObject("errorMessage", "Erro ao carregar dados de agendamento");
+        }
+        return mv;
     }
 }
