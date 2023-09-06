@@ -1,10 +1,23 @@
 package com.soulcode.goserviceapp.domain;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "mensagens")
 public class Mensagem {
@@ -30,63 +43,12 @@ public class Mensagem {
     @JoinColumn(nullable = false)
     private Agendamento agendamento;
 
-    public Mensagem() {
-    }
-
     public Mensagem(Long id, String conteudo, LocalDateTime dataHora, Usuario remetente, Usuario destinatario, Agendamento agendamento) {
         this.id = id;
         this.conteudo = conteudo;
         this.dataHora = dataHora;
         this.remetente = remetente;
         this.destinatario = destinatario;
-        this.agendamento = agendamento;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getConteudo() {
-        return conteudo;
-    }
-
-    public void setConteudo(String conteudo) {
-        this.conteudo = conteudo;
-    }
-
-    public LocalDateTime getDataHora() {
-        return dataHora;
-    }
-
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
-    }
-
-    public Usuario getRemetente() {
-        return remetente;
-    }
-
-    public void setRemetente(Usuario remetente) {
-        this.remetente = remetente;
-    }
-
-    public Usuario getDestinatario() {
-        return destinatario;
-    }
-
-    public void setDestinatario(Usuario destinatario) {
-        this.destinatario = destinatario;
-    }
-
-    public Agendamento getAgendamento() {
-        return agendamento;
-    }
-
-    public void setAgendamento(Agendamento agendamento) {
         this.agendamento = agendamento;
     }
 
