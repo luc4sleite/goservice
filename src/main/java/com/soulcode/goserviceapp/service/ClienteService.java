@@ -1,6 +1,7 @@
 package com.soulcode.goserviceapp.service;
 
 import com.soulcode.goserviceapp.domain.Cliente;
+import com.soulcode.goserviceapp.domain.Endereco;
 import com.soulcode.goserviceapp.repository.ClienteRepository;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
@@ -15,6 +16,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EnderecoService enderecoService;
 
     public Cliente findAuthenticated(Authentication authentication){
         if (authentication != null && authentication.isAuthenticated()){
@@ -44,6 +48,8 @@ public class ClienteService {
         updatedCliente.setTelefone(cliente.getTelefone());
         updatedCliente.setCpf(cliente.getCpf());
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
+        Endereco endereco = enderecoService.updateUserCliente(cliente);
+        updatedCliente.setEndereco(endereco);
         return clienteRepository.save(updatedCliente);
     }
 }

@@ -33,6 +33,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT * FROM usuarios WHERE UPPER(nome) LIKE UPPER(CONCAT('%', :nome, '%'))", nativeQuery = true)
     List<Usuario> findByName(@Param("nome") String nome);
 
-//    @Query (value = "SELECT * FROM endereco JOIN usuario ON ")
-//    List<Endereco> findbyEndereco();
+    @Query(value = "SELECT endereco_id FROM usuarios WHERE id = ?", nativeQuery = true)
+    Long findEnderecoByUsuarioId(Long id);
+
 }

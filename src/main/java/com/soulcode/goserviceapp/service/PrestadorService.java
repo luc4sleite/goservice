@@ -1,5 +1,6 @@
 package com.soulcode.goserviceapp.service;
 
+import com.soulcode.goserviceapp.domain.Endereco;
 import com.soulcode.goserviceapp.domain.Prestador;
 import com.soulcode.goserviceapp.domain.Servico;
 import com.soulcode.goserviceapp.repository.PrestadorRepository;
@@ -20,6 +21,9 @@ public class PrestadorService {
 
     @Autowired
     private ServicoService servicoService;
+
+    @Autowired
+    private EnderecoService enderecoService;
 
     public Prestador findAuthenticated(Authentication authentication){
         if(authentication != null && authentication.isAuthenticated()){
@@ -48,6 +52,8 @@ public class PrestadorService {
         updatedPrestador.setEmail(prestador.getEmail());
         updatedPrestador.setDescricao(prestador.getDescricao());
         updatedPrestador.setTaxaPorHora(prestador.getTaxaPorHora());
+        Endereco endereco = enderecoService.updateUserPrestador(prestador);
+        updatedPrestador.setEndereco(endereco);
         return prestadorRepository.save(updatedPrestador);
     }
 
