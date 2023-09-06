@@ -17,4 +17,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
             " JOIN usuarios u ON u.id = ps.prestador_id" +
             " WHERE u.email = ?", nativeQuery = true)
     List<Servico> findByPrestadorEmail(String email);
+
+    @Query(value = "SELECT * FROM servicos ORDER BY id LIMIT 10 OFFSET ((@pageNumber - 1) * 10)", nativeQuery = true)
+    List<Servico> findLimited();
 }
