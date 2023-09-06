@@ -27,8 +27,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT u.perfil AS perfil, COUNT(*) AS quantidade FROM usuarios AS u GROUP BY u.perfil", nativeQuery = true)
     List<Usuario> findbyPerfil();
 
-    @Query(value = "SELECT * FROM usuarios ORDER BY id LIMIT 10 OFFSET ((@pageNumber - 1) * 10)", nativeQuery = true)
-    List<Usuario> findLimited();
+    @Query(value = "SELECT * FROM usuarios ORDER BY id LIMIT 10 OFFSET ?", nativeQuery = true)
+    List<Usuario> findLimited(int offset);
 
     @Query(value = "SELECT * FROM usuarios WHERE UPPER(nome) LIKE UPPER(CONCAT('%', :nome, '%'))", nativeQuery = true)
     List<Usuario> findByName(@Param("nome") String nome);

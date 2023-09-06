@@ -26,7 +26,20 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Cacheable(cacheNames = "redisCache")
+    public Long paginasRegistros(){
+        Long totalRecords = usuarioRepository.count();
+        Long totalPages = totalRecords / 10;
+        if (totalRecords % 10 != 0){
+            totalPages++;
+        }
+        return totalPages;
+    }
+
+    public List<Usuario> findLimited(int offset){
+        return usuarioRepository.findLimited(offset);
+    }
+
+//    @Cacheable(cacheNames = "redisCache2")
     public List<Usuario> findAll(){
         System.err.println("BUSCANDO USUARIOS NO BANCO DE DADOS...");
         return usuarioRepository.findAll();
@@ -38,7 +51,6 @@ public class UsuarioService {
         }
         throw new UsuarioNaoEncontradoException();
     }
-
 
     public Usuario findById(Long id) {
         Optional<Usuario> result = usuarioRepository.findById(id);
