@@ -45,7 +45,9 @@
                         <div class="invalid-feedback">Por favor, selecione um perfil</div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Adicionar novo usuário ao sistema">Salvar <i class="bi bi-save2 ms-2"></i></button>
                 </form>
             </div>
         </div>
@@ -126,8 +128,12 @@
                     <form method="post" th:action="@{/admin/usuarios/busca}">
                         <label for="buscaUsuario">Buscar usuário por nome: </label>
                         <input type="text" name="buscaUsuario" id="buscaUsuario" required>
-                        <button type="submit" class="btn btn-primary">Buscar <i class="bi bi-search"></i></button>
-                        <a th:href="@{/admin/usuarios}" class="btn btn-primary">Limpar filtro <i class="bi bi-calendar-x"></i></a>
+                        <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="Filtrar usuário pelo nome.">Buscar <i class="bi bi-search"></i></button>
+                        <a th:href="@{/admin/usuarios}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                           data-bs-custom-class="custom-tooltip"
+                           data-bs-title="Limpar filtro">Limpar filtro <i class="bi bi-calendar-x"></i></a>
                     </form>
                 </div>
                 <table class="table w-100">

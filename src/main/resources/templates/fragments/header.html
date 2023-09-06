@@ -1,7 +1,9 @@
 <header xmlns:th="http://www.thymeleaf.org" class="shadow p-3" th:fragment="header">
     <div class="container">
         <div class="d-flex gap-3 align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-custom-class="custom-tooltip"
+               data-bs-title="Voltar para a pagina inicial">
                 <img src="/assets/img/logos/2.png" alt="GoService" class="logo">
             </a>
 
@@ -12,12 +14,20 @@
                         Administrador
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/admin/dados">Dados Cadastrais</a></li>
+                        <li><a class="dropdown-item" href="/admin/dados" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode ver e alterar seus dados">Dados Cadastrais</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/admin/servicos">Serviços</a></li>
-                        <li><a class="dropdown-item" href="/admin/usuarios">Usuários</a></li>
+                        <li><a class="dropdown-item" href="/admin/servicos" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode ver e alterar os serviços disponiveis.">Serviços</a></li>
+                        <li><a class="dropdown-item" href="/admin/usuarios" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode adcionar, habilitar ou desabilitar um usuário">Usuários</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="/admin/dashboard" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode ver um dashboard dos usuários">Dashboard</a></li>
                     </ul>
                 </div>
                 <!-- PRESTADOR -->
@@ -26,9 +36,13 @@
                         Prestador
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/prestador/dados">Dados Cadastrais</a></li>
+                        <li><a class="dropdown-item" href="/prestador/dados" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode ver e alterar seus dados.">Dados Cadastrais</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/prestador/agenda">Agenda de Serviços</a></li>
+                        <li><a class="dropdown-item" href="/prestador/agenda" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode ver sua agenda de serviços.">Agenda de Serviços</a></li>
                     </ul>
                 </div>
                 <!-- CLIENTE -->
@@ -37,17 +51,27 @@
                         Cliente
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/cliente/dados">Dados Cadastrais</a></li>
+                        <li><a class="dropdown-item" href="/cliente/dados" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode ver e alterar seus dados">Dados Cadastrais</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/cliente/agendar">Agendar Serviço</a></li>
-                        <li><a class="dropdown-item" href="/cliente/historico">Histórico de Serviços</a></li>
+                        <li><a class="dropdown-item" href="/cliente/agendar" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Aqui você pode agendar seus serviços">Agendar Serviço</a></li>
+                        <li><a class="dropdown-item" href="/cliente/historico" data-bs-toggle="tooltip" data-bs-placement="right"
+                               data-bs-custom-class="custom-tooltip"
+                               data-bs-title="Nesse página você pode ver seus serviços agendados">Histórico de Serviços</a></li>
                     </ul>
                 </div>
             </ul>
 
             <div class="text-end" th:if="${not #authorization.expression('isAuthenticated()')}">
-                <a href="/auth/login" type="button" class="btn btn-outline-primary me-3">Login</a>
-                <a href="/auth/cadastro" type="button" class="btn btn-primary">Cadastre-se</a>
+                <a href="/auth/login" type="button" class="btn btn-outline-primary me-3" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   data-bs-custom-class="custom-tooltip"
+                   data-bs-title="Nesse botão você será direcionado a página de Login">Login</a>
+                <a href="/auth/cadastro" type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   data-bs-custom-class="custom-tooltip"
+                   data-bs-title="Nesse botão você será direcionado a página de Cadastro">Cadastre-se</a>
             </div>
 
             <div class="dropdown text-end" th:if="${#authorization.expression('isAuthenticated()')}">
@@ -55,11 +79,15 @@
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item" href="/auth/password/new">Editar Senha</a></li>
+                    <li><a class="dropdown-item" href="/auth/password/new" data-bs-toggle="tooltip" data-bs-placement="left"
+                           data-bs-custom-class="custom-tooltip"
+                           data-bs-title="Aqui você pode alterar sua senha.">Editar Senha</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <form method="post" th:action="@{/logout}">
-                            <button class="dropdown-item" type="submit">Logout</button>
+                            <button class="dropdown-item" type="submit" data-bs-toggle="tooltip" data-bs-placement="left"
+                                    data-bs-custom-class="custom-tooltip"
+                                    data-bs-title="Tem certeza de que deseja desconectar dessa conta.">Logout</button>
                         </form>
                     </li>
                 </ul>

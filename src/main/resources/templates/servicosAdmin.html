@@ -46,7 +46,9 @@
                         </select>
                         <div class="invalid-feedback">Por favor, selecione uma categoria</div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Confirmar a adição do novo serviço">Salvar <i class="bi bi-save2 ms-2"></i></button>
                 </form>
             </div>
         </div>
@@ -139,8 +141,12 @@
                 <form method="post" th:action="@{/admin/servicos/busca}">
                     <label for="buscaServico">Buscar serviço por nome: </label>
                     <input type="text" name="buscaServico" id="buscaServico" required>
-                    <button type="submit" class="btn btn-primary">Buscar <i class="bi bi-search"></i></button>
-                    <a th:href="@{/admin/servicos}" class="btn btn-primary">Limpar filtro <i class="bi bi-calendar-x"></i></a>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Aplicar filtro">Buscar <i class="bi bi-search"></i></button>
+                    <a th:href="@{/admin/servicos}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                       data-bs-custom-class="custom-tooltip"
+                       data-bs-title="Limpar filtro">Limpar filtro <i class="bi bi-calendar-x"></i></a>
                 </form>
 
                 <table class="table w-100">

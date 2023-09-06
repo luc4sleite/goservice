@@ -25,7 +25,9 @@
                                 <option value="" disabled selected>Selecione uma especialidade</option>
                                 <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${servico.nome}"></option>
                             </select>
-                            <button class="btn btn-primary" style="width: 9rem">Procurar <i class="bi bi-search ms-2"></i></button>
+                            <button class="btn btn-primary" style="width: 9rem" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-custom-class="custom-tooltip"
+                                    data-bs-title="Procurar prestador que atenda o serviço selecionado">Procurar <i class="bi bi-search ms-2" ></i></button>
                         </div>
                     </div>
                 </form>
@@ -65,7 +67,9 @@
                         <div class="form-text"></div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Agendar <i class="bi bi-calendar-check-fill ms-2"></i></button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="fazer o pedido de agendamento para o prestador.">Agendar <i class="bi bi-calendar-check-fill ms-2"></i></button>
                 </form>
             </div>
 
