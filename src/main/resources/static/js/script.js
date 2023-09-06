@@ -23,3 +23,6 @@ document.addEventListener("DOMContentLoaded", function (){
     var hoje = new Date().toISOString().split("T")[0];
     dataInput.setAttribute("min", hoje);
 });
+
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

@@ -18,8 +18,12 @@
                     <input type="date" name="dataInicial" id="dataInicial" required>
                     <label for="dataFinal">Data Final</label>
                     <input type="date" name="dataFinal" id="dataFinal" required>
-                    <button type="submit" class="btn btn-primary">Buscar <i class="bi bi-search"></i></button>
-                    <a th:href="@{/prestador/agenda}" class="btn btn-primary">Limpar filtro <i class="bi bi-calendar-x"></i></a>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Aplicar o filtro por data">Buscar <i class="bi bi-search"></i></button>
+                    <a th:href="@{/prestador/agenda}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                       data-bs-custom-class="custom-tooltip"
+                       data-bs-title="Limpar o filtro por data">Limpar filtro <i class="bi bi-calendar-x"></i></a>
                 </form>
 
                 <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
