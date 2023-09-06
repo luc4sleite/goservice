@@ -217,4 +217,17 @@ public class AdministradorController {
         }
         return mv;
     }
+
+    @PostMapping(value = "/servicos/busca")
+    public ModelAndView buscarServico(@RequestParam(name = "buscaServico") String servico) {
+        ModelAndView mv = new ModelAndView("servicosAdmin");
+        try {
+            List<Servico> servicos = servicoService.findByName(servico);
+            mv.addObject("servicos", servicos);
+        }
+        catch (Exception ex) {
+            mv.addObject("errorMessage", "Serviço não encontrado");
+        }
+        return mv;
+    }
 }
