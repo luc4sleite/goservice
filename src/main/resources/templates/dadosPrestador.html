@@ -41,8 +41,12 @@
                         <div class="form-text"></div>
                     </div>
 
-                    <a th:href = "@{/endereco/new}" class="btn btn-primary">Alterar endereço</a>
-                    <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
+                    <a th:href = "@{/endereco/new}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right"
+                       data-bs-custom-class="custom-tooltip"
+                       data-bs-title="Va para a página alterar endereço">Alterar endereço</a>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Ao clicar você confirma a alteração dos dados acima.">Salvar <i class="bi bi-save2 ms-2"></i></button>
                 </form>
 
                 <h5 class="card-title mb-2 mt-5">Especialidades</h5>
@@ -52,7 +56,9 @@
                         <option value="" disabled selected>Selecione uma especialidade</option>
                         <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${servico.nome}"></option>
                     </select>
-                    <button type="submit" class="btn btn-primary" style="width: 9rem">Adicionar <i class="bi bi-plus-circle ms-2"></i></button>
+                    <button type="submit" class="btn btn-primary" style="width: 9rem" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="adicione essa nova especialidade ao ser perfil">Adicionar <i class="bi bi-plus-circle ms-2"></i></button>
                 </form>
 
                 <table class="table w-100">
@@ -91,8 +97,12 @@
                     </div>
                     <form class="modal-footer" method="post" th:action="@{/prestador/dados/especialidade/remover}">
                         <input type="hidden" name="servicoId" th:value="${especialidade.id}">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="Cancelar exclusão">Cancelar</button>
+                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="Confirmar exclusão">Excluir</button>
                     </form>
                 </div>
             </div>

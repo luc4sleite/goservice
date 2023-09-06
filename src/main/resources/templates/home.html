@@ -11,6 +11,49 @@
 
     <div th:replace="fragments/header :: header"></div>
 
+    <div id="carouselExampleIndicators" class="carousel slide" style="align-items:center justify-content:center">
+        <div class="carrossel" >
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+        </div>
+        <div class="carousel-inner mx-auto my-4 mb-4" style="width: 84.375rem">
+            <div class="carousel-item active">
+                <img th:src = "@{/assets/img/banners/1.png}" class="d-block w-100" alt="propaganda1">
+            </div>
+            <div class="carousel-item">
+                <img th:src = "@{/assets/img/banners/2.png}" class="d-block w-100" alt="propaganda2">
+            </div>
+            <div class="carousel-item">
+                <img th:src = "@{/assets/img/banners/3.png}" class="d-block w-100" alt="propaganda3">
+            </div>
+            <div class="carousel-item">
+                <img th:src = "@{/assets/img/banners/4.png}" class="d-block w-100" alt="propaganda4">
+            </div>
+            <div class="carousel-item">
+                <img th:src = "@{/assets/img/banners/5.png}" class="d-block w-100" alt="propaganda5">
+            </div>
+            <div class="carousel-item">
+                <img th:src = "@{/assets/img/banners/6.png}" class="d-block w-100" alt="propaganda6">
+            </div>
+        </div>
+
+        <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        </div>
+    </div>
+
+
     <!-- implementação dos cards na página!-->
     <div class="d-flex flex-row justify-content-between align-items-center flex-wrap gap-5 p-3">
         <div class="card" style="width:20rem">
