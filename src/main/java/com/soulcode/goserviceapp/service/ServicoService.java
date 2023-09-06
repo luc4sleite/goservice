@@ -50,4 +50,8 @@ public class ServicoService {
     public List<Servico> findByPrestadorEmail(String email) {
         return servicoRepository.findByPrestadorEmail(email);
     }
+
+    public List<Servico> findByName(String servico) {
+        return servicoRepository.findByName(servico);
+    }
 }
