@@ -123,11 +123,11 @@
 
                 <div class="formBusca">
                     <h5 class="card-title mb-2">Usuários cadastrados</h5>
-                    <form method="post" th:action="@{/admin/usuarios/busca}">
+                    <form method="post" th:action="@{/admin/usuarios/busca}" class="d-flex w-100 justify-content-between align-items-center gap-2">
                         <label for="buscaUsuario">Buscar usuário por nome: </label>
-                        <input type="text" name="buscaUsuario" id="buscaUsuario" required>
+                        <input class="flex-fill rounded" type="text" name="buscaUsuario" id="buscaUsuario" required>
                         <button type="submit" class="btn btn-primary">Buscar <i class="bi bi-search"></i></button>
-                        <a th:href="@{/admin/usuarios}" class="btn btn-primary">Limpar filtro <i class="bi bi-calendar-x"></i></a>
+                        <a th:href="@{/admin/usuarios}" class="btn btn-primary">Limpar filtro <i class="bi bi-x-square-fill ms-2"></i></a>
                     </form>
                 </div>
                 <table class="table w-100">
@@ -155,6 +155,16 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" th:classappend="${pageNumber == currentPage} ? 'active' : ''">
+                            <form method="post" th:action="@{/admin/usuarios/pag}">
+                                <input type="hidden" name="pageNumber" th:value="${pageNumber}">
+                                <button type="submit" class="page-link" th:text="${pageNumber}"></button>
+                            </form>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </main>

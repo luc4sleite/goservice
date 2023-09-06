@@ -118,11 +118,30 @@ public class AdministradorController {
     }
 
     @GetMapping(value = "/usuarios")
-    public ModelAndView usuarios() {
+    public ModelAndView usuarios(@RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber)
+    {
         ModelAndView mv = new ModelAndView("usuariosAdmin");
         try {
-            List<Usuario> usuarios = usuarioService.findAll();
+            int offset = (pageNumber - 1) * 10;
+            List<Usuario> usuarios = usuarioService.findLimited(offset);
+            Long totalPages = usuarioService.paginasRegistros();
             mv.addObject("usuarios", usuarios);
+            mv.addObject("totalPages", totalPages);
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
+        }
+        return mv;
+    }
+
+    @PostMapping(value = "/usuarios/pag")
+    public ModelAndView paginacao(@RequestParam(name = "pageNumber") int pageNumber){
+        ModelAndView mv = new ModelAndView("usuariosAdmin");
+        try {
+            int offset = (pageNumber - 1) * 10;
+            List<Usuario> usuarios = usuarioService.findLimited(offset);
+            Long totalPages = usuarioService.paginasRegistros();
+            mv.addObject("usuarios", usuarios);
+            mv.addObject("totalPages", totalPages);
         } catch (Exception ex) {
             mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
         }
