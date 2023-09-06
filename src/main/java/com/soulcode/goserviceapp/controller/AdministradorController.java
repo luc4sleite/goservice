@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -201,5 +203,18 @@ public class AdministradorController {
             attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados cadastrais.");
         }
         return "redirect:/admin/dados";
+    }
+
+    @PostMapping(value = "/usuarios/busca")
+    public ModelAndView buscarUsuario(@RequestParam(name= "buscaUsuario") String usuario) {
+        ModelAndView mv = new ModelAndView("usuariosAdmin");
+        try {
+            List<Usuario>  usuarios = usuarioService.findByName(usuario);
+            mv.addObject("usuarios", usuarios);
+        }
+        catch (Exception ex) {
+            mv.addObject("errorMessage", "Usuario não encontrado");
+        }
+        return mv;
     }
 }

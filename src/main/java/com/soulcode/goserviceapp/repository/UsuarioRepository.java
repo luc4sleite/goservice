@@ -2,6 +2,7 @@ package com.soulcode.goserviceapp.repository;
 
 import com.soulcode.goserviceapp.domain.Endereco;
 import com.soulcode.goserviceapp.domain.Usuario;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,6 +29,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query(value = "SELECT * FROM usuarios ORDER BY id LIMIT 10 OFFSET ((@pageNumber - 1) * 10)", nativeQuery = true)
     List<Usuario> findLimited();
+
+    @Query(value = "SELECT * FROM usuarios WHERE UPPER(nome) LIKE UPPER(CONCAT('%', :nome, '%'))", nativeQuery = true)
+    List<Usuario> findByName(@Param("nome") String nome);
 
 //    @Query (value = "SELECT * FROM endereco JOIN usuario ON ")
 //    List<Endereco> findbyEndereco();
