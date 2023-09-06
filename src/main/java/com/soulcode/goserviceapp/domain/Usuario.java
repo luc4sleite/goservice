@@ -2,9 +2,7 @@ package com.soulcode.goserviceapp.domain;
 
 import com.soulcode.goserviceapp.domain.enums.Perfil;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
