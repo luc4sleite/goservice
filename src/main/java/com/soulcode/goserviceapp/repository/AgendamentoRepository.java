@@ -29,5 +29,8 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
     @Query(value = "SELECT a.* FROM agendamentos a WHERE a.prestador_id = ?1 AND a.data = ?2 AND a.hora = ?3", nativeQuery = true)
     List<Agendamento> findByPrestadorIdAndDataHora(Long prestadorId, LocalDate data, LocalTime hora);
 
+    @Query(value = "SELECT * FROM agendamentos ORDER BY id LIMIT 10 OFFSET ((@pageNumber - 1) * 10)", nativeQuery = true)
+    List<Agendamento> findLimited();
+
 }
 
